@@ -31,12 +31,14 @@
   (helm-build-async-source "fzf"
     :candidates-process 'helm-fzf--do-candidate-process
     :filter-one-by-one 'identity
-    :requires-pattern 3
+    ;; Don't let there be a minimum. it's annoying
+    :requires-pattern 0
     :action 'helm-find-file-or-marked
     :candidate-number-limit 9999))
 
 (defun helm-fzf--do-candidate-process ()
   (let* ((cmd-args (-filter 'identity (list helm-fzf-executable
+                                            "--tac"
                                             "--no-sort"
                                             "-f"
                                             helm-pattern)))
